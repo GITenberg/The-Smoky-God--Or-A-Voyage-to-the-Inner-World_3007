@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: P7GBoW8mXFCSkleIoiBz0njoo2M423e6Cf38m0xFzaT2oaDdd7h+AxYgVyjRIwWSWwAirSfZbFgGTONkVvUHgVSGYGf+7HbvPe+vwlYMWdVLusPgPeTcxTjvuaiArMVCLbSrYhzdjW0n7NdqQMwpIEGR3VDGn8wRj6cDmPnDY4mPEclraq3uU16LujG+hwb2PK0qrawLER0YOHBW50bSi35y62J95Tf0o61z/vV7qLhnOqbTFeMtHH9zL4cFK6565ELxtrmgiIxG1z00bGMlksrUQFfh19sffqyYrYKGs+u/Fe9lEJaRfY1XD2d0+vlPPAQ/3pdNyMhHa9C6SDQC/Ft8nBXbQL9qjiqlDoOamBUKvkUG8pXTmnyqeG5sUU0KB+sY7RkRANl21fPKPMzV1ebJfl0ItP1yoDYsRuc6CowbG0qLhlN7UrQ968yXNmbt6Vivaypcsp+g46tzHYHOhAVniJ4tkFpFHml3qSYJTURetVFXYMIFcULY+TpvkS4JQyzc1IpMDN/R5xueKpDv9Qsw/LLjSHz/3mzgSyUrGUhF4eE+nI3nSQZsWaflJOfjdqpyWlSIMgM8Tdvhh7poPWzeWQnsStq/b45RNZU+Ax82oiCFNFM9nH5xNvCpN0rUZCQLHZd8/KbooNx5Jz+odWTbkPGT3LOUlQXELJPFtWk=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/The-Smoky-God--Or-A-Voyage-to-the-Inner-World_3007
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
