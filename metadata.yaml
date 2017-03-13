@@ -1,5 +1,8 @@
 _repo: The-Smoky-God--Or-A-Voyage-to-the-Inner-World_3007
-_version: 0.1.0
+_version: 0.2.0
+covers:
+- cover_type: generated
+  image_path: cover.png
 creator:
   author:
     agent_name: Emerson, Willis George
@@ -12,6 +15,8 @@ description: "The Smoky God, or A Voyage Journey to the Inner Earth is a book pr
   \ as a true account written by Willis George Emerson in 1908, which describes the\
   \ adventures of Olaf Jansen, a Norwegian sailor who sailed with his father through\
   \ an entrance to the Earth's interior at the North Pole.\n From Wikipedia (CC BY-SA)."
+edition_identifiers:
+  edition_id: http://www.gutenberg.org/ebooks/3007#The-Smoky-God--Or-A-Voyage-to-the-Inner-World
 gutenberg_issued: '2002-01-01'
 gutenberg_type: Text
 identifiers:
